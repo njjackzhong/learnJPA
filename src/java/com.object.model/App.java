@@ -1,5 +1,7 @@
 package com.object.model;
 
+import com.object.dao.PointDao;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,13 +10,23 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) {
+
+//        PointDao dao = new PointDao();
+//        List<Point> points = dao.findAll();
+
+
         //open a database connection
         //(create a new database if not exists)
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("points.odb");        //represents a database
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("points.odb");        //represents a database
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.object.pu");        //represents a database
         EntityManager em = emf.createEntityManager();                // represents a connection to database
 
         //find the num of Point objects in the database
+        //1000000
+        //1046130
         Query q = em.createQuery("select count(p) from Point p");
+        Object c = q.getSingleResult();
+
         System.out.println("Total Points: " + q.getSingleResult());
 
         //save 1000 Point objects in the database
@@ -28,7 +40,8 @@ public class App {
 
         //find the num of Point objects in the database
         Query q1 = em.createQuery("select count(p) from Point p");
-        System.out.println("Total Points: " + q1.getSingleResult());
+        Object c1 = q1.getSingleResult();
+        System.out.println("Total Points: " + c1);
 
         //find the average X value
         Query q2 = em.createQuery("select avg(p.x) from Point p");
